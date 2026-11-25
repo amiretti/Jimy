@@ -1,0 +1,44 @@
+# El plan gratuito de Supabase pausa el proyecto tras 7 días sin actividad y no hace backups.
+# Este workflow: (1) cada 3 días hace una consulta para mantenerlo activo;
+#                (2) los lunes hace un pg_dump y lo guarda como artifact (retención 30 días).
+#
+# Secrets necesarios (Settings → Secrets and variables → Actions):
+#   SUPABASE_URL, SUPABASE_ANON_KEY  → keepalive
+#   SUPABASE_DB_URL                  → backup (connection string de Postgres, "Session pooler")
+name: Supabase keepalive y backup
+
+on:
+  schedule:
+    - cron: '17 9 */3 * *'
+    - cron: '43 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Consulta liviana al catálogo
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          curl -fsS "$SUPABASE_URL/rest/v1/exercises?select=id&limit=1" \
+            -H "apikey: $SUPABASE_ANON_KEY" -o /dev/null
+
+  backup:
+    if: github.event.schedule == '43 6 * * 1' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Instalar cliente de Postgres
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-client
+      - name: pg_dump
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: pg_dump "$SUPABASE_DB_URL" --no-owner --no-privileges --schema=public -Fc -f jimy-$(date +%F).dump
+      - uses: actions/upload-artifact@v4
+        with:
+          name: jimy-backup
+          path: jimy-*.dump
+          retention-days: 30

@@ -1,0 +1,17 @@
+node_modules
+dist
+dev-dist
+*.local
+.env
+.env.*
+!.env.example
+*.dump
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.log
+coverage
+supabase/.temp
+supabase/.branches
