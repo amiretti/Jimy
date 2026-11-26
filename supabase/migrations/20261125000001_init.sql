@@ -1,8 +1,9 @@
 -- Jimy — schema inicial (fase 1)
 -- Catálogo universal (lo administra el admin) + datos privados por usuario con RLS.
 
-create extension if not exists pg_trgm;
-create extension if not exists unaccent;
+create schema if not exists extensions;
+create extension if not exists pg_trgm with schema extensions;
+create extension if not exists unaccent with schema extensions;
 
 create type load_type   as enum ('kg', 'band', 'bodyweight', 'time', 'none');
 create type item_kind   as enum ('exercise', 'note');   -- note = elongo, foam: no se registra
@@ -13,7 +14,7 @@ create type item_status as enum ('done', 'skipped');
 -- Admin: claim `role = 'admin'` en app_metadata del JWT (se setea desde el dashboard).
 -- ---------------------------------------------------------------------------
 create or replace function is_admin() returns boolean
-language sql stable as $$
+language sql stable set search_path = '' as $$
   select coalesce(auth.jwt() -> 'app_metadata' ->> 'role', '') = 'admin'
 $$;
 
@@ -37,11 +38,11 @@ create table exercises (
   created_at        timestamptz not null default now(),
   unique (source, source_id)
 );
-create index exercises_name_trgm on exercises using gin (name gin_trgm_ops);
+create index exercises_name_trgm on exercises using gin (name extensions.gin_trgm_ops);
 
 -- Texto buscable (nombre + alias) para la búsqueda difusa.
-create or replace function exercise_search_text(e exercises) returns text
-language sql immutable as $$
+create or replace function exercise_search_text(e public.exercises) returns text
+language sql immutable set search_path = '' as $$
   select lower(e.name || ' ' || array_to_string(e.aliases, ' '))
 $$;
 

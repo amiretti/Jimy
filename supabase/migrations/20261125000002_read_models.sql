@@ -3,7 +3,7 @@
 -- Búsqueda difusa en el catálogo: nombre y alias, con y sin tildes.
 create or replace function search_exercises(q text, max_results int default 20)
 returns setof exercises
-language sql stable security invoker as $$
+language sql stable security invoker set search_path = public, extensions as $$
   select e.*
   from exercises e
   where unaccent(exercise_search_text(e)) % unaccent(lower(q))
@@ -15,7 +15,7 @@ $$;
 -- "La última vez": última sesión de cada ejercicio (de cualquier rutina) con sus series.
 create or replace function last_performances(exercise_ids uuid[], exclude_session uuid default null)
 returns table (exercise_id uuid, session_id uuid, session_date timestamptz, sets jsonb)
-language sql stable security invoker as $$
+language sql stable security invoker set search_path = public, extensions as $$
   with latest as (
     select distinct on (l.exercise_id) l.exercise_id, s.id as session_id, s.started_at
     from set_logs l
@@ -34,7 +34,7 @@ $$;
 -- Historial de un ejercicio: una fila por sesión, de la más nueva a la más vieja.
 create or replace function exercise_history(p_exercise_id uuid, max_sessions int default 50)
 returns table (session_id uuid, session_date timestamptz, sets jsonb)
-language sql stable security invoker as $$
+language sql stable security invoker set search_path = public, extensions as $$
   select s.id, s.started_at, jsonb_agg(to_jsonb(l) order by l.kind, l.set_number)
   from set_logs l
   join sessions s on s.id = l.session_id
@@ -47,7 +47,7 @@ $$;
 -- Duplica una rutina (días + ítems) para cargar la nueva rutina del profe.
 create or replace function duplicate_routine(p_routine_id uuid, p_name text)
 returns uuid
-language plpgsql security invoker as $$
+language plpgsql security invoker set search_path = public as $$
 declare
   new_routine uuid;
   d record;
@@ -70,7 +70,7 @@ end $$;
 -- Activa una rutina y archiva la anterior.
 create or replace function activate_routine(p_routine_id uuid)
 returns void
-language plpgsql security invoker as $$
+language plpgsql security invoker set search_path = public as $$
 begin
   update routines set active = false, archived_at = now() where user_id = auth.uid() and active and id <> p_routine_id;
   update routines set active = true, archived_at = null where id = p_routine_id and user_id = auth.uid();

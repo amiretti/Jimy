@@ -36,7 +36,7 @@ on conflict (slug) do nothing;
 -- Crea la rutina de noviembre 2026 para el usuario logueado (se llama una vez desde la app).
 create or replace function seed_initial_routine()
 returns uuid
-language plpgsql security invoker as $$
+language plpgsql security invoker set search_path = public as $$
 declare
   r uuid; a uuid; b uuid; c uuid;
 begin

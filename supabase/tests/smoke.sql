@@ -1,6 +1,7 @@
 -- Smoke test del schema contra un Postgres local con un stub de auth (no es para Supabase).
 -- Uso: ver README, sección "Validar el SQL".
 create schema auth;
+set search_path = public, extensions;
 create table auth.users (id uuid primary key);
 create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid $$;
 create function auth.jwt() returns jsonb language sql stable as $$ select coalesce(nullif(current_setting('request.jwt.claims', true), ''), '{}')::jsonb $$;
@@ -14,6 +15,9 @@ grant execute on all functions in schema auth to authenticated;
 
 grant select, insert, update, delete on all tables in schema public to authenticated;
 grant execute on all functions in schema public to authenticated;
+-- En Supabase, authenticated ya tiene acceso a extensions.
+grant usage on schema extensions to authenticated;
+grant execute on all functions in schema extensions to authenticated;
 insert into auth.users values ('11111111-1111-1111-1111-111111111111'), ('22222222-2222-2222-2222-222222222222');
 
 set role authenticated;

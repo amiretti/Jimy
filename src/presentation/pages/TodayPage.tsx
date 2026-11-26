@@ -44,7 +44,21 @@ export function TodayPage() {
     }
   }
 
-  if (view === undefined) return <p className="status">Cargando…</p>
+  if (view === undefined) {
+    return error ? (
+      <main className="page">
+        <h1>No pudimos cargar tu rutina</h1>
+        <p role="alert" className="error">
+          {error}
+        </p>
+        <button type="button" className="btn btn--primary btn--block" onClick={() => run(async () => {})}>
+          Reintentar
+        </button>
+      </main>
+    ) : (
+      <p className="status">Cargando…</p>
+    )
+  }
 
   if (view === null) {
     return (
