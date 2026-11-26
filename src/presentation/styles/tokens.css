@@ -1,31 +1,64 @@
-/* Tokens de diseño: único lugar para colores, espaciado y tipografía (DRY).
-   Provisorios: la identidad visual se define con la skill UI UX Pro Max.
-   Contrastes verificados: texto ≥ 4,5:1, UI ≥ 3:1 sobre --color-bg. */
+/* Tokens de diseño de Jimy: único lugar para colores, espaciado y tipografía (DRY).
+   Fuente de verdad: manual de marca de Jimy (sistema de diseño, tema "Oscuro (app)").
+   Paleta Volt nocturno: primario Tinta (~70 %), secundario Teal 900 (~20 %), acento Volt (~10 %).
+   Contrastes medidos: ver comentarios por token. */
 :root {
   color-scheme: dark;
 
-  --color-bg: #111827;
-  --color-surface: #1f2937;
-  --color-border: #374151;
-  --color-text: #f9fafb;
-  --color-muted: #9ca3af;
-  --color-accent: #22c55e;
-  --color-accent-text: #052e16;
-  --color-danger: #f87171;
-  --color-focus: #facc15;
+  /* Marca */
+  --brand-tinta: #0e1020;
+  --brand-teal: #08434a; /* blanco encima 11:1 · volt encima 9,5:1 · contra tinta 1,7:1 → lleva borde */
+  --brand-volt: #d4ff2e; /* tinta encima 16,3:1 · nunca texto sobre claro */
 
-  --font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-size-sm: 0.875rem;
-  --font-size-md: 1rem;
-  --font-size-lg: 1.25rem;
-  --font-size-xl: 1.75rem;
+  /* Superficies */
+  --color-bg: var(--brand-tinta);
+  --color-surface: #171a2e;
+  --color-secondary: var(--brand-teal);
 
+  /* Texto */
+  --color-text: #ffffff; /* 18,9:1 sobre bg · 17,2:1 sobre surface */
+  --color-text-on-dark: #ffffff;
+  --color-muted: #a9aec2; /* 8,6:1 sobre bg */
+  --color-on-accent: var(--brand-tinta);
+  --color-on-secondary: #ffffff;
+  --color-link: #5fc4cc; /* 9,2:1 sobre bg */
+
+  /* Bordes */
+  --color-border: #2a2e47; /* decorativo: separadores y tarjetas */
+  --color-border-control: #6b7090; /* 3,9:1: inputs, steppers, botones fantasma */
+  --color-border-secondary: #2e8a93; /* 4,6:1: borde de botones y chips teal sobre tinta */
+
+  /* Estados */
+  --color-accent: var(--brand-volt);
+  --color-accent-text: var(--brand-tinta);
+  --color-track: #2a2e47;
+  --color-focus: var(--brand-volt);
+  --color-danger: #f87171; /* 6,8:1 sobre bg */
+
+  /* Tipografía */
+  --font-display: 'Rubik', system-ui, sans-serif;
+  --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-size-sm: 0.875rem; /* label 14 */
+  --font-size-md: 1rem; /* body 16 */
+  --font-size-lg: 1.25rem; /* heading 20 */
+  --font-size-xl: 1.75rem; /* title / number 28 */
+  --font-size-display: 2.5rem; /* display 40 */
+
+  /* Espaciado */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
   --space-6: 1.5rem;
+  --space-8: 2rem;
 
-  --radius: 0.75rem;
+  /* Radios */
+  --radius-sm: 0.5rem;
+  --radius: 0.875rem; /* radius-md: botones, steppers, inputs */
+  --radius-lg: 1.375rem; /* tarjetas */
+  --radius-pill: 999px;
+
+  /* Tamaños táctiles */
   --touch-target: 3rem; /* 48 px: acciones de registro */
+  --touch-min: 2.75rem; /* 44 px: resto de controles */
 }

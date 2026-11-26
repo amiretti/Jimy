@@ -14,7 +14,14 @@ body {
 }
 
 a {
-  color: var(--color-accent);
+  color: var(--color-link);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.2;
 }
 
 :focus-visible {
@@ -46,7 +53,7 @@ a {
   top: -3rem;
   padding: var(--space-2) var(--space-4);
   background: var(--color-accent);
-  color: var(--color-accent-text);
+  color: var(--color-on-accent);
   z-index: 10;
 }
 .skip-link:focus {
@@ -72,10 +79,10 @@ a {
 
 /* Botones: mínimo 44 px; acciones de registro 48 px */
 .btn {
-  min-height: 2.75rem;
-  min-width: 2.75rem;
+  min-height: var(--touch-min);
+  min-width: var(--touch-min);
   padding: var(--space-2) var(--space-4);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: var(--radius);
   background: var(--color-surface);
   color: var(--color-text);
@@ -90,7 +97,13 @@ a {
   min-height: var(--touch-target);
   background: var(--color-accent);
   border-color: var(--color-accent);
-  color: var(--color-accent-text);
+  color: var(--color-on-accent);
+  font-weight: 800;
+}
+.btn--secondary {
+  background: var(--color-secondary);
+  border-color: var(--color-border-secondary);
+  color: var(--color-on-secondary);
   font-weight: 700;
 }
 .btn--ghost {
@@ -109,6 +122,15 @@ a {
   margin-top: var(--space-4);
 }
 
+/* Encabezado de marca */
+.brand-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
 /* Login */
 .login {
   min-height: 100dvh;
@@ -118,9 +140,12 @@ a {
   padding: var(--space-6);
   text-align: center;
 }
-.login__title {
-  font-size: 3rem;
-  margin: 0;
+.login__logo {
+  display: flex;
+  justify-content: center;
+}
+.login__tagline {
+  color: var(--color-muted);
 }
 
 /* Tabs de día */
@@ -131,18 +156,19 @@ a {
   padding: 0;
 }
 .tab {
-  min-height: 2.75rem;
+  min-height: var(--touch-min);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   background: transparent;
   color: var(--color-text);
   font: inherit;
 }
 .tab--active {
-  background: var(--color-text);
-  color: var(--color-bg);
-  font-weight: 700;
+  background: var(--color-secondary);
+  border-color: var(--color-border-secondary);
+  color: var(--color-on-secondary);
+  font-weight: 800;
 }
 
 /* Barra de avance fija */
@@ -155,9 +181,8 @@ a {
 }
 .progress__track {
   height: 0.75rem;
-  border-radius: 999px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-track);
   overflow: hidden;
 }
 .progress__fill {
@@ -181,7 +206,7 @@ a {
 }
 .card {
   padding: var(--space-4);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
 }
@@ -231,8 +256,10 @@ a {
 .badge {
   margin-left: var(--space-2);
   padding: 0 var(--space-2);
-  border-radius: 999px;
-  border: 1px solid var(--color-muted);
+  border-radius: var(--radius-pill);
+  background: var(--color-secondary);
+  color: var(--color-on-secondary);
+  border: 1px solid var(--color-border-secondary);
   font-size: var(--font-size-sm);
   font-weight: 400;
   vertical-align: middle;
@@ -265,10 +292,12 @@ a {
   min-height: var(--touch-target);
   text-align: center;
   font: inherit;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
   background: var(--color-bg);
   color: var(--color-text);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: var(--radius);
 }
 
@@ -282,12 +311,12 @@ a {
   gap: var(--space-1);
 }
 .form input {
-  min-height: 2.75rem;
+  min-height: var(--touch-min);
   padding: var(--space-2);
   font: inherit;
   background: var(--color-surface);
   color: var(--color-text);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: var(--radius);
 }
 
@@ -303,9 +332,9 @@ a {
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
-  min-height: 2.75rem;
+  min-height: var(--touch-min);
   padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-control);
   border-radius: var(--radius);
 }
 .segmented__option--active {
@@ -338,20 +367,24 @@ a {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  min-height: 3.5rem;
+  min-height: 4rem;
   padding-bottom: env(safe-area-inset-bottom);
-  background: var(--color-surface);
-  border-top: 1px solid var(--color-border);
+  background: var(--color-secondary);
 }
-.bottom-nav a {
+.bottom-nav a,
+.bottom-nav .btn--ghost {
   display: inline-flex;
   align-items: center;
-  min-height: 2.75rem;
+  min-height: var(--touch-min);
   padding: 0 var(--space-4);
-  color: var(--color-muted);
+  color: var(--color-on-secondary);
   text-decoration: none;
+  font-weight: 600;
 }
 .bottom-nav a.active {
-  color: var(--color-accent);
-  font-weight: 700;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+  text-decoration-color: var(--color-accent);
 }

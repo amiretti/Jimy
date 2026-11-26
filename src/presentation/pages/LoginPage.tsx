@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Logo } from '../components/Logo'
 
 export function LoginPage({ onSignIn }: { onSignIn: () => Promise<void> }) {
   const [error, setError] = useState<string | null>(null)
@@ -14,7 +15,9 @@ export function LoginPage({ onSignIn }: { onSignIn: () => Promise<void> }) {
 
   return (
     <main className="login">
-      <h1 className="login__title">Jimy</h1>
+      <h1 className="login__logo">
+        <Logo height={96} />
+      </h1>
       <p className="login__tagline">Tu compañero de gym. Se acuerda de lo que levantaste.</p>
       <button type="button" className="btn btn--primary btn--block" onClick={handleClick}>
         Entrar con Google

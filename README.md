@@ -13,7 +13,9 @@ Proyecto de **CuervoDev**. La especificación funcional (spec v1) vive en el doc
 | Gráficos | Recharts |
 | Tests | Vitest + Testing Library + axe-core |
 
-Todas las dependencias son gratuitas y open source (MIT, Apache 2.0, BSD, ISC o MPL 2.0).
+Todas las dependencias son gratuitas y open source (MIT, Apache 2.0, BSD, ISC o MPL 2.0; las fuentes Rubik y Plus Jakarta Sans, OFL 1.1, autoalojadas con Fontsource).
+
+Identidad visual: [manual de marca de Jimy](https://claude.ai/artifact/V35Q4FRVpDYSDUdugYRPbQ).
 
 ## Arquitectura
 
@@ -68,5 +70,6 @@ createdb jimy_test && psql -v ON_ERROR_STOP=1 -d jimy_test -f supabase/tests/smo
 - Editor de rutinas (duplicar está implementado en SQL y en el repositorio; falta la UI).
 - Búsqueda en el catálogo desde la UI (la RPC `search_exercises` ya existe).
 - Traducción al español en el import de free-exercise-db.
-- Identidad visual con la skill UI UX Pro Max (los tokens actuales son provisorios).
+- Swipe en las tarjetas (derecha = hecho, izquierda = saltear, con deshacer), según la spec.
+- Pulido visual con la skill UI UX Pro Max sobre la marca ya aplicada.
 - Pasada manual con TalkBack o VoiceOver.

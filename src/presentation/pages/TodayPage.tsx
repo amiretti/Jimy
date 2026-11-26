@@ -5,6 +5,7 @@ import type { ItemStatus } from '@domain/session/progress'
 import { useServices } from '../hooks/services'
 import { ExerciseCard } from '../components/ExerciseCard'
 import { ProgressBar } from '../components/ProgressBar'
+import { Logo } from '../components/Logo'
 
 export function TodayPage() {
   const { session: uc } = useServices()
@@ -79,8 +80,11 @@ export function TodayPage() {
   return (
     <main className="page">
       <header className="page__header">
-        <h1>Hoy</h1>
-        <p className="page__subtitle">{routine.name}</p>
+        <div className="brand-header">
+          <Logo height={32} />
+          <span className="page__subtitle">{routine.name}</span>
+        </div>
+        <h1>Hoy · Día {day.label}</h1>
         <nav aria-label="Día de la rutina">
           <ul className="tabs">
             {routine.days.map((d) => (
