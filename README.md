@@ -15,7 +15,7 @@ Proyecto de **CuervoDev**. La especificación funcional (spec v1) vive en el doc
 
 Todas las dependencias son gratuitas y open source (MIT, Apache 2.0, BSD, ISC o MPL 2.0; las fuentes Rubik y Plus Jakarta Sans, OFL 1.1, autoalojadas con Fontsource).
 
-Identidad visual: [manual de marca de Jimy](https://claude.ai/artifact/V35Q4FRVpDYSDUdugYRPbQ).
+Identidad visual: [manual de marca](docs/brand/README.md) (versionado en el repo; [vista navegable](https://claude.ai/artifact/V35Q4FRVpDYSDUdugYRPbQ)). Índice de documentación: [`docs/`](docs/README.md).
 
 ## Arquitectura
 
